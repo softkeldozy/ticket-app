@@ -1,0 +1,11 @@
+{
+  "workbench.colorCustomizations": {
+    "editor.foreground": "#e5e1f1",
+    "editorBracketMatch.background": "#ff0000",
+    "activityBar.background": "#092C5E",
+    "titleBar.activeBackground": "#0D3E83",
+    "titleBar.activeForeground": "#F7FAFE"
+  },
+  "editor.acceptSuggestionOnEnter": "on",
+  "cSpell.words": ["fontawesome", "fortawesome", "tailwindcss"]
+}
