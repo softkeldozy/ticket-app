@@ -1,23 +1,43 @@
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-const handleSubmit = (e) => {
-  e.preventDefault();
-};
-const handleChange = (e) => {
-  const value = e.target.value;
-  const name = e.target.value;
 
-  setFormData((prevState) => ({
-    ...prevState,
-    [name]: value,
-  }));
-};
 const TicketForm = () => {
+  const router = useRouter();
+
+  // const [title, setTitle]=useState("");
+  // const [description, setDescription] = useState("");
+  // const [title, setTitle]=useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.value;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch("/api/Tickets", {
+      method: "POST",
+      body: JSON.stringify({ formData }),
+      "content-type": "application/json",
+    });
+
+    if (!res.ok) {
+      throw new Error("Couldn't create a new Ticket");
+    }
+    //*Upon Success
+    router.refresh();
+    router.push("/");
+  };
+
   const startingTicketData = {
-    title: "",
-    description: "",
+    title: " ",
+    description: " ",
     priority: 1,
     progress: 0,
     status: "Not Started",
@@ -30,17 +50,17 @@ const TicketForm = () => {
       <form
         className="flex flex-col gap-3 w-1/2"
         method="post"
-        onChange={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <h3>Create Your Ticket</h3>
         <label>Title</label>
         <input
-          type="text"
           id="title"
           name="title"
+          type="text"
           onChange={handleChange}
           required={true}
-          value={formData.title}
+          // value={formData.title}
         />
         {/* TODO change to rich text area */}
         <label>Description</label>
@@ -50,7 +70,7 @@ const TicketForm = () => {
           onChange={handleChange}
           required={true}
           value={formData.description}
-          rows="5"
+          rows="10"
         />
         <label>Category</label>
         <select
